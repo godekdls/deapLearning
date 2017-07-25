@@ -25,4 +25,9 @@ B = A.flatten()
 print(B) # [1 2 3 4]
 print(B>2) # [False False  True  True]
 
+# dot
+A = np.array([[1,2], [3,4]])
+B = np.array([[5,6], [7,8]])
+print(np.dot(A, B)) # [[19 22]
+                    # [43 50]]
 
