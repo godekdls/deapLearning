@@ -16,6 +16,19 @@ def step_function_for_numpy_array(x):
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
+def idendify_function(x):
+	return x
+
+def softmax(x): 
+    if x.ndim == 2: 
+        x = x.T 
+        x = x - np.max(x, axis=0) 
+        y = np.exp(x) / np.sum(np.exp(x), axis=0) 
+        return y.T  
+
+    x = x - np.max(x) # 오버플로 대책 
+    return np.exp(x) / np.sum(np.exp(x)) 
+
 #x = np.arange(-5.0, 5.0, 0.1)
 #y = sigmoid(x)
 #plot.plot(x, y)
