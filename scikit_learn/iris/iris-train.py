@@ -11,11 +11,11 @@ csv_label = csv["Name"]
 train_data, test_data, train_label, test_label = train_test_split(csv_data, csv_label)
 
 # training
-clf = svm.SVC()  # use SVM algorithm
-clf.fit(train_data, train_label)
+classifier = svm.SVC()  # use SVM algorithm
+classifier.fit(train_data, train_label)
 
 # prediction
-pre = clf.predict(test_data)
+pre = classifier.predict(test_data)
 
 # evaluation
 ac_score = metrics.accuracy_score(test_label, pre)

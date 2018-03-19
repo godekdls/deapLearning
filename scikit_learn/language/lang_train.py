@@ -33,11 +33,11 @@ if __name__ == "__main__":
     test_data = load_files("./sample/test/*.txt")
 
     # training
-    clf = svm.SVC()
-    clf.fit(train_data["frequencies"], train_data["labels"])
+    classifier = svm.SVC()
+    classifier.fit(train_data["frequencies"], train_data["labels"])
 
     # prediction
-    predict = clf.predict(test_data["frequencies"])
+    predict = classifier.predict(test_data["frequencies"])
 
     # evaluation
     accuracy_score = metrics.accuracy_score(test_data["labels"], predict)

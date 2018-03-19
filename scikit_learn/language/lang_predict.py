@@ -1,6 +1,6 @@
 from sklearn.externals import joblib
 
-clf = joblib.load("./sample/dump/freq.pkl")
+classifier = joblib.load("./sample/dump/freq.pkl")
 
 def detect_language(text):
     text = text.lower()
@@ -12,7 +12,7 @@ def detect_language(text):
     total = sum(count)
     if total == 0: return "no input data"
     frequency = list(map(lambda n: n/total, count))
-    predict = clf.predict([frequency])
+    predict = classifier.predict([frequency])
     lang_dic = {"en": "English", "fr": "French", "id":"Indonesian Language", "tl" : "Tagalog"}
     return lang_dic[predict[0]]
 

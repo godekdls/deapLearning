@@ -19,11 +19,11 @@ train_data = load_csv("./sample/train.csv")
 test_data = load_csv("./sample/t10k.csv")
 
 # training
-clf = svm.SVC()
-clf.fit(train_data["images"], train_data["labels"])
+classifier = svm.SVC()
+classifier.fit(train_data["images"], train_data["labels"])
 
 # prediction
-predict = clf.predict(test_data["images"])
+predict = classifier.predict(test_data["images"])
 
 # evalutation
 accuray_score = metrics.accuracy_score(test_data["labels"], predict)

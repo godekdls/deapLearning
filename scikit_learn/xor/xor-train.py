@@ -16,11 +16,11 @@ data = data_frame.ix[:,0:1] # [ [0, 0], [0, 1], [1, 0], [1, 1] ]
 label = data_frame.ix[:,2] # [0, 1, 1, 0]
 
 # training
-clf = svm.SVC() # use SVM algorithm
-clf.fit(data, label)
+classifier = svm.SVC() # use SVM algorithm
+classifier.fit(data, label)
 
 # prediction
-pre = clf.predict(data)
+pre = classifier.predict(data)
 print("prediction result: ", pre)
 
 # evaluation
