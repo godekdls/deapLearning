@@ -3,7 +3,7 @@ from sklearn import svm, metrics
 from sklearn.model_selection import train_test_split
 
 # https://github.com/pandas-dev/pandas/blob/master/pandas/tests/data/iris.csv
-csv = pandas.read_csv('./iris.csv')
+csv = pandas.read_csv('./sample/iris.csv')
 
 csv_data = csv[["SepalLength", "SepalWidth", "PetalLength", "PetalWidth"]]
 csv_label = csv["Name"]
