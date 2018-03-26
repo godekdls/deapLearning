@@ -16,27 +16,35 @@ test_csv = csv[15000:20000]
 test_data = test_csv[["weight", "height"]]
 test_label = list(test_csv["binary_label"])
 
-x = tensorflow.placeholder(tensorflow.float32, shape=[None, 2]) # ?*2 2 dimension
-y_ = tensorflow.placeholder(tensorflow.float32, shape=[None, 3])
+x = tensorflow.placeholder(tensorflow.float32, shape=[None, 2], name="x") # ?*2 2 dimension
+y_ = tensorflow.placeholder(tensorflow.float32, shape=[None, 3], name="y_")
 
-W = tensorflow.Variable(tensorflow.zeros([2, 3]))  # weight [ [0, 0, 0], [0, 0, 0] ]
-b = tensorflow.Variable(tensorflow.zeros([3]))  # bias [0, 0, 0]
-y = tensorflow.nn.softmax(tensorflow.matmul(x, W) + b) # matmul : Multiplies matrix
+with tensorflow.name_scope('interface') as scope:
+    W = tensorflow.Variable(tensorflow.zeros([2, 3]), name="W")  # weight [ [0, 0, 0], [0, 0, 0] ]
+    b = tensorflow.Variable(tensorflow.zeros([3]), name="bias")  # bias [0, 0, 0]
+    with tensorflow.name_scope('softmax') as scope:
+        y = tensorflow.nn.softmax(tensorflow.matmul(x, W) + b) # matmul : Multiplies matrix
 
 # training
-cross_entropy = - tensorflow.reduce_sum(y_ * tensorflow.log(y)) # error function
-learning_rate = 0.01
-optimizer = tensorflow.train.GradientDescentOptimizer(learning_rate)
-train = optimizer.minimize(cross_entropy)
+with tensorflow.name_scope('loss') as scope:
+    cross_entropy = - tensorflow.reduce_sum(y_ * tensorflow.log(y)) # error function
+with tensorflow.name_scope('training') as scope:
+    learning_rate = 0.01
+    optimizer = tensorflow.train.GradientDescentOptimizer(learning_rate)
+    train = optimizer.minimize(cross_entropy)
 
 # prediction
-predict = tensorflow.equal(tensorflow.argmax(y, 1), tensorflow.argmax(y_, 1))
-
-# evaluation
-accuracy = tensorflow.reduce_mean(tensorflow.cast(predict, tensorflow.float32))
+with tensorflow.name_scope('accuracy') as scope:
+    predict = tensorflow.equal(tensorflow.argmax(y, 1), tensorflow.argmax(y_, 1))
+    # evaluation
+    accuracy = tensorflow.reduce_mean(tensorflow.cast(predict, tensorflow.float32))
 
 session = tensorflow.Session()
+# TensorBoard
+tw = tensorflow.train.SummaryWriter("log_dir", graph=session.graph)
+
 session.run(tensorflow.initialize_all_variables())
+
 # training
 for step in range(3500):
     i = (step * 100) % 14000
